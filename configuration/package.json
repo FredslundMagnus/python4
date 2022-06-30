@@ -1,0 +1,28 @@
+{
+  "name": "language-configuration-python-4",
+  "displayName": "Language Configuration Python 4",
+  "description": "Language Configuration Python 4",
+  "version": "0.0.1",
+  "publisher": "Magnus Fredslund",
+  "engines": {
+    "vscode": "^1.28.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "python4",
+        "extensions": [
+          ".py4"
+        ],
+        "aliases": [
+          "py4",
+          "Python 4"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ]
+  }
+}
