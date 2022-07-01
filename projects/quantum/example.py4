@@ -1,10 +1,54 @@
 from quantum import *
+print("Simple cubits")
+print(|00⟩) # [1. 0. 0. 0.]^T
+print(|01⟩) # [0. 1. 0. 0.]^T
+print(⟨10|) # [0. 0. 1. 0.]
+print(⟨11|) # [0. 0. 0. 1.]
+print(⟨100|) # [0. 0. 0. 0. 1. 0. 0. 0.]
 
-print(|00⟩)
-print(|01⟩)
-print(⟨10|)
-print(⟨11|)
-print(⟨100|)
-
+print("\nCrossup:")
 seven = |1⟩ ⊗ |1⟩ ⊗ |0⟩
-print(seven)
+print(seven) # [0. 0. 0. 0. 0. 0. 1. 0.]^T
+
+print("\nCnot:")
+print(C|00⟩) # [1. 0. 0. 0.]^T
+print(C|01⟩) # [0. 1. 0. 0.]^T
+print(C|10⟩) # [0. 0. 0. 1.]^T
+print(C|11⟩) # [0. 0. 1. 0.]^T
+
+print("\nHadamard:")
+superposition_0 = H|0⟩
+superposition_1 = H|1⟩
+print(superposition_0) # [0.70710678 0.70710678]^T
+print(H(superposition_0)) # [1. 0.]^T
+print(H*superposition_0) # [1. 0.]^T
+print()
+print(superposition_1) # [ 0.70710678 -0.70710678]^T
+print(H(superposition_1)) # [0. 1.]^T
+print(H*superposition_1) # [0. 1.]^T
+
+print("\nNot:")
+print(X|0⟩) # [0. 1.]^T
+print(X|1⟩) # [1. 0.]^T
+
+print("\nConnections:")
+print(|0⟩-X-H-X-H-X) # [-1.  0.]^T
+
+print("\nFactorize:")
+print(factorize(|0101⟩)) # |0101⟩
+print(|0101⟩.factorize()) # |0101⟩
+print(factorize(⟨00101|)) # ⟨00101|
+print(⟨00101|.factorize()) # ⟨00101|
+
+print("\nCollapse:")
+print(collapse(H|0⟩)) # [0. 1.]^T or [1. 0.]^T
+print(collapse(H|1⟩)) # [0. 1.]^T or [1. 0.]^T
+
+print("\nMeasure:")
+print(measure(H|0⟩)) # |0⟩ or |1⟩
+print(measure(H|1⟩)) # |0⟩ or |1⟩
+
+print("\nEntanglement:")
+entanglement = C(H|0⟩ ⊗ |0⟩)
+print(entanglement)
+print(measure(entanglement)) # |00⟩ or |11⟩
