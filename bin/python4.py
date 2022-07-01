@@ -1,5 +1,5 @@
 import re
-from sys import argv, exit
+from sys import argv
 from os.path import join
 args = argv[1:]
 
