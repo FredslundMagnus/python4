@@ -50,5 +50,5 @@ print(measure(macro_1('1'))) # macro_3('0') or macro_3('1')
 
 print("\nEntanglement:")
 entanglement = C(macro_1('0').__circle_cross__(macro_3('0')))
-print(entanglement)
+print(entanglement) # [0.70710678 0.         0.         0.70710678]^T
 print(measure(entanglement)) # macro_3('00') or macro_3('11')

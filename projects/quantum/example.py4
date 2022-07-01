@@ -50,5 +50,5 @@ print(measure(H|1⟩)) # |0⟩ or |1⟩
 
 print("\nEntanglement:")
 entanglement = C(H|0⟩ ⊗ |0⟩)
-print(entanglement)
+print(entanglement) # [0.70710678 0.         0.         0.70710678]^T
 print(measure(entanglement)) # |00⟩ or |11⟩
