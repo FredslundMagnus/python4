@@ -643,7 +643,7 @@
 		},
 		"number-dec": {
 			"name": "constant.numeric.dec.python4",
-			"match": "(?x)\n  (?<![\\w\\.])(?:\n      [1-9](?: _?[0-9] )*\n      |\n      0+\n      |\n      [0-9](?: _?[0-9] )* ([jJ])\n      |\n      0 ([0-9]+)(?![eE\\.])\n  )\\b\n",
+			"match": "(?x)\n  (?<![\\w\\.])(?:\n      [0-9](?: _?[0-9] )*\n      |\n      0+\n      |\n      [0-9](?: _?[0-9] )* ([jJ])\n      |\n      0 ([0-9]+)(?![eE\\.])\n  )\\b\n",
 			"captures": {
 				"1": {
 					"name": "storage.type.imaginary.number.python4"
@@ -1815,10 +1815,6 @@
 			"comment": "It's illegal to name class or function \"True\"",
 			"name": "keyword.illegal.name.python4",
 			"match": "\\b(True|False|None)\\b"
-		},
-		"illegal-anno": {
-			"name": "invalid.illegal.annotation.python4",
-			"match": "->"
 		},
 		"regexp-base-expression": {
 			"patterns": [

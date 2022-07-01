@@ -1,0 +1,10 @@
+from quantum import *
+
+print(|00⟩)
+print(|01⟩)
+print(⟨10|)
+print(⟨11|)
+print(⟨100|)
+
+seven = |1⟩ ⊗ |1⟩ ⊗ |0⟩
+print(seven)

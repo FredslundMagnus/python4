@@ -1,0 +1,32 @@
+from __future__ import annotations
+import numpy as np
+
+class Qbit:
+    def __init__(self, vector: np.ndarray, isColumn: bool = True) -> None:
+        self.isColumn = isColumn
+        self.vector = vector
+
+    @staticmethod
+    def from_ints(*xs: int, isColumn: bool = True) -> Qbit:
+        x = ''.join([str(v) for v in xs])
+        index, length = int(x, base=2), 2**len(x)
+        vector = np.zeros(length)
+        vector[index] = 1
+        if isColumn:
+            vector = vector.reshape((-1,1))
+        return Qbit(vector, isColumn)
+
+
+    def __circle_cross__(self, other: Qbit) -> Qbit:
+        assert other.isColumn and self.isColumn, "Must be collumn vector"
+        return Qbit(np.concatenate([v*other.vector for v in self.vector]), isColumn=True)
+
+    def __repr__(self) -> str:
+        return str(self)
+
+    def __str__(self) -> str:
+        return str(self.vector.flatten()) + ("^T" if self.isColumn else '')
+
+macro |(x)⟩ -> Qbit: return Qbit.from_ints(*[int(v) for v in x], isColumn=True)
+macro ⟨(x)| -> Qbit: return Qbit.from_ints(*[int(v) for v in x], isColumn=False)
+infix ⊗(a: Qbit, b: Qbit) -> Qbit: return a.__circle_cross__(b)
