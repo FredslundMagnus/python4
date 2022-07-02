@@ -93,8 +93,6 @@ def teleportation(T: Qbit, logging: bool = False) -> Qbit:
 
     # the state of B is now exaclty the same as T was before this started.
     return state[2]
-    # x=0: macro_9('000') + macro_9('011'): macro_9('0') + macro_9('3')
-    # x=1: macro_9('110') + macro_9('101'): macro_9('6') + macro_9('5')
 
 
 print(teleportation(macro_9('0')), macro_9('0'))
@@ -104,7 +102,3 @@ print(teleportation(macro_6('1')), macro_6('1'))
 print(teleportation(X(macro_6('1'))), X(macro_6('1')))
 random = macro_3('')
 print(teleportation(random), random)
-
-print("\nTest")
-print(macro_6('1').__circle_cross__(macro_6('1')) , macro_6('1'), macro_6('1'))
-print(X(macro_6('1')).__circle_cross__(X(macro_6('1'))) , X(macro_6('1')), X(macro_6('1')))
