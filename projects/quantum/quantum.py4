@@ -211,4 +211,5 @@ macro X|(x)⟩ -> Qbit: return X * Qbit.from_ints(*[int(v) for v in x], isColumn
 macro Z|(x)⟩ -> Qbit: return Z * Qbit.from_ints(*[int(v) for v in x], isColumn=True)
 macro |(x)⟩ -> Qbit: return Qbit.from_ints(*[int(v) for v in x], isColumn=True)
 macro ⟨(x)| -> Qbit: return Qbit.from_ints(*[int(v) for v in x], isColumn=False)
+
 infix ⊗(a: Qbit, b: Qbit) -> Qbit: return a.__circle_cross__(b)
