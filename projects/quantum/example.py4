@@ -1,54 +1,104 @@
 from quantum import *
 print("Simple cubits")
-print(|00⟩) # [1. 0. 0. 0.]^T
-print(|01⟩) # [0. 1. 0. 0.]^T
-print(⟨10|) # [0. 0. 1. 0.]
-print(⟨11|) # [0. 0. 0. 1.]
-print(⟨100|) # [0. 0. 0. 0. 1. 0. 0. 0.]
+print(|00⟩) # [1 0 0 0]^T
+print(|01⟩) # [0 1 0 0]^T
+print(⟨10|) # [0 0 1 0]
+print(⟨11|) # [0 0 0 1]
+print(⟨100|) # [0 0 0 0 1 0 0 0]
 
 print("\nCrossup:")
 seven = |1⟩ ⊗ |1⟩ ⊗ |0⟩
-print(seven) # [0. 0. 0. 0. 0. 0. 1. 0.]^T
+print(seven) # [0 0 0 0 0 0 1 0]^T
 
 print("\nCnot:")
-print(C|00⟩) # [1. 0. 0. 0.]^T
-print(C|01⟩) # [0. 1. 0. 0.]^T
-print(C|10⟩) # [0. 0. 0. 1.]^T
-print(C|11⟩) # [0. 0. 1. 0.]^T
+print(C|00⟩) # [1 0 0 0]^T
+print(C|01⟩) # [0 1 0 0]^T
+print(C|10⟩) # [0 0 0 1]^T
+print(C|11⟩) # [0 0 1 0]^T
 
 print("\nHadamard:")
 superposition_0 = H|0⟩
 superposition_1 = H|1⟩
-print(superposition_0) # [0.70710678 0.70710678]^T
-print(H(superposition_0)) # [1. 0.]^T
-print(H*superposition_0) # [1. 0.]^T
+print(superposition_0) # [√2 √2]^T
+print(H(superposition_0)) # [1 0]^T
+print(H*superposition_0) # [1 0]^T
 print()
-print(superposition_1) # [ 0.70710678 -0.70710678]^T
-print(H(superposition_1)) # [0. 1.]^T
-print(H*superposition_1) # [0. 1.]^T
+print(superposition_1) # [√2 -√2]^T
+print(H(superposition_1)) # [0 1]^T
+print(H*superposition_1) # [0 1]^T
 
 print("\nNot:")
-print(X|0⟩) # [0. 1.]^T
-print(X|1⟩) # [1. 0.]^T
+print(X|0⟩) # [0 1]^T
+print(X|1⟩) # [1 0]^T
 
 print("\nConnections:")
-print(|0⟩-X-H-X-H-X) # [-1.  0.]^T
+print(|0⟩-X-H-X-H-X) # [-1 0]^T
 
 print("\nFactorize:")
-print(factorize(|0101⟩)) # |0101⟩
-print(|0101⟩.factorize()) # |0101⟩
-print(factorize(⟨00101|)) # ⟨00101|
-print(⟨00101|.factorize()) # ⟨00101|
-
-print("\nCollapse:")
-print(collapse(H|0⟩)) # [0. 1.]^T or [1. 0.]^T
-print(collapse(H|1⟩)) # [0. 1.]^T or [1. 0.]^T
+print(|0101⟩) # |0101⟩
+print(⟨00101|) # ⟨00101|
 
 print("\nMeasure:")
 print(measure(H|0⟩)) # |0⟩ or |1⟩
 print(measure(H|1⟩)) # |0⟩ or |1⟩
 
 print("\nEntanglement:")
-entanglement = C(H|0⟩ ⊗ |0⟩)
-print(entanglement) # [0.70710678 0.         0.         0.70710678]^T
-print(measure(entanglement)) # |00⟩ or |11⟩
+entanglement0 = C(H|0⟩ ⊗ |0⟩)
+print(entanglement0) # [√2 0 0 √2]^T
+print(measure(entanglement0)) # |00⟩ or |11⟩
+
+print("\nRandom:")
+print(|ψ⟩)
+print(H|ψ⟩)
+print(X|ψ⟩)
+print(Z|ψ⟩)
+
+print("\nTeleportation:")
+
+def teleportation(T: Qbit, logging: bool = False) -> Qbit:
+    # Setup
+    A = |0⟩
+    B = |0⟩
+
+    # Alice and Bob entangles two qubits long before the actual transportation
+    preprocessed = C(H(A) ⊗ B)
+    if logging: print(preprocessed)
+    # |00⟩ + |11⟩ / √2
+
+    # We now skip to the state where Alice want to send the qubit T to Bob
+    state = T ⊗ preprocessed
+    if logging: print(state)
+    # |x00⟩ + |x11⟩ / √2
+
+    # Now alice want to send her qubit T, so she entangles it with her other qbit A
+    state = C(state, 0, 1)
+    if logging: print(state)
+    # |xx0⟩ + |x(1-x)1⟩ / sqrt(2)
+
+    # Alice then aplies the Hadamard gate to the qubit she wants to send
+    state = H(state, 0)
+    if logging: print(state)
+
+    # Alice then meassures her qbit A and send the information to bob
+    A, state = measure(state, 1)
+    # Bob performs X if he recieves a |1⟩ to his qubit B
+    if A == |1⟩: state = X(state, 2)
+    if logging: print(A, state)
+    
+    # Alice then meassures her qbit T and send the information to bob
+    T, state = measure(state, 0)
+    # Bob performs Z if he recieves a |1⟩ to his qubit B
+    if T == |1⟩: state = Z(state, 2)
+    if logging: print(T, state)
+
+    # the state of B is now exaclty the same as T was before this started.
+    return state[2]
+
+
+print(teleportation(|0⟩), |0⟩)
+print(teleportation(|1⟩), |1⟩)
+print(teleportation(H|0⟩), H|0⟩)
+print(teleportation(H|1⟩), H|1⟩)
+print(teleportation(X(H|1⟩)), X(H|1⟩))
+random = |ψ⟩
+print(teleportation(random), random)
