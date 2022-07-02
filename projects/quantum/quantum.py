@@ -84,9 +84,7 @@ class Qbit:
 
     def __getitem__(self, key: int) -> Qbit:
         if all(measure(self, qbit)[1] == self for qbit in range(len(self)) if qbit != key):
-            
-            qbits = len(self)
-            axis = qbits-key-1
+            axis = len(self)-key-1
             shift = 2**axis
             vector = np.zeros(2)
             for i in range(0, len(self.vector)//(shift*2), shift*2):
@@ -112,8 +110,8 @@ class Qbit:
             if self.isColumn:
                 vector = vector.reshape((-1,1))
             return Qbit(vector, self.isColumn)
-        qbits = len(self)
-        axis = qbits-qbit-1
+
+        axis = len(self)-qbit-1
         shift = 2**axis
         props=np.zeros(2)
         for i in range(0, len(self.vector)//(shift*2), shift*2):
@@ -142,8 +140,6 @@ class Qbit:
     def factorize(state: Qbit) -> List[Qbit]:
         pass
 
-        
-
 def measure(state: Qbit, qbit: int | None = None) -> Qbit:
     return state.measure(qbit=qbit)
 
@@ -167,8 +163,7 @@ class Gate():
             return Qbit(self.matrix @ other.vector, isColumn=True)
         if self.matrix.shape[0] == 2:
             assert len(axis) == 1, "You need to specify which 1 axis to work on"
-            qbits = len(bin(len(other.vector)))-3
-            axis = qbits-axis[0]-1
+            axis = len(other)-axis[0]-1
             shift = 2**axis
             result = np.zeros(len(other.vector)).reshape((-1,1))
             for i in range(0, len(other.vector)//(shift*2), shift*2):
@@ -183,7 +178,7 @@ class Gate():
             first, second = axis
             assert first != second
             smallest, largest = min(first, second), max(first, second)
-            qbits = len(bin(len(other.vector)))-3
+            qbits = len(other)
             axis = qbits-smallest-1
             shift = 2**axis
             axis2 = qbits-largest-1
@@ -216,4 +211,3 @@ def macro_7(x: str) -> Qbit: return X * Qbit.from_ints(*[int(v) for v in x], isC
 def macro_8(x: str) -> Qbit: return Z * Qbit.from_ints(*[int(v) for v in x], isColumn=True)
 def macro_9(x: str) -> Qbit: return Qbit.from_ints(*[int(v) for v in x], isColumn=True)
 def macro_10(x: str) -> Qbit: return Qbit.from_ints(*[int(v) for v in x], isColumn=False)
-
