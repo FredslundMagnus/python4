@@ -1,0 +1,6 @@
+
+
+
+
+
+prefix ¬(x: Symol) -> Symbol: return x.negate() 
