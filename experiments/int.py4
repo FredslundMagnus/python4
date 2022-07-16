@@ -1,0 +1,7 @@
+class int:
+    ...
+
+
+impl Add for int:
+    def __add__(self: Self, other: ...) -> Self:
+        ...

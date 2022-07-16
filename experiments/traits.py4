@@ -1,0 +1,15 @@
+trait Add:
+    def __add__(self: Self, other: ...) -> ...:
+        ...
+
+trait RAdd:
+    def __radd__(self: Self, other: ...) -> ...:
+        ...
+        
+trait Sub:
+    def __sub__(self: Self, other: ...) -> ...:
+        ...
+
+trait Mul:
+    def __mul__(self: Self, other: ...) -> ...:
+        ...

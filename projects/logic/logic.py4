@@ -1,6 +1,16 @@
 
+class Symbol:
+	pass
 
+# prefix ¬(x: Symbol) -> Symbol: return x.negate() 
+infix ∧(a: Symbol, b: Symbol) -> Symbol: return ""
+infix ∨(a: Symbol, b: Symbol) -> Symbol: return ""
+infix →(a: Symbol, b: Symbol) -> Symbol: return ""
+infix ↔(a: Symbol, b: Symbol) -> Symbol: return ""
 
+macro ∀(x). -> Symbol: return 
+macro ∃(x). -> Symbol: return lambda x:
 
+	
 
-prefix ¬(x: Symol) -> Symbol: return x.negate() 
+∀x.(x ∧ ¬x)

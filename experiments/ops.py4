@@ -1,0 +1,6 @@
+infix +(a: impl[Add], b: ...) -> ...:
+    return a.__add__(b)
+
+infix +(a: ..., b: impl[RAdd]) -> ...:
+    return b.__radd__(a)
+
